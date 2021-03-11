@@ -6,15 +6,19 @@ import ErrorMessage from '../errorMessage';
 
 export default class RandomChar extends Component {
 
-    constructor() {
-        super();
-        this.updateChar();
-    }
-
     gotService = new gotService();
     state = {
         char: {},
         loading: true
+    }
+
+    componentDidMount () {
+        this.updateChar();
+        this.timerId = setInterval(this.updateChar, 1500);
+    }
+
+    componentWillUnmount () {
+        clearInterval(this.timerId);
     }
 
     onCharLoaded = (char) => {
@@ -32,7 +36,7 @@ export default class RandomChar extends Component {
         })
     }
 
-    updateChar() {
+    updateChar = () => {
         const id = Math.floor(Math.random() * 1400 + 25);
         this.gotService.getCharacter(id)
             .then(this.onCharLoaded)
@@ -60,23 +64,23 @@ const View = ({char}) => {
     const {name, gender, born, died, culture} = char;
     return (
         <>
-            <h4>Random Character: {name}</h4>
+            <h4>Random Character: {name ? name : 'no data :('}</h4>
             <ul className="list-group list-group-flush">
                 <li className="list-group-item d-flex justify-content-between">
                     <span className="term">Gender </span>
-                    <span>{gender}</span>
+                    <span>{gender ? gender : 'no data :('}</span>
                 </li>
                 <li className="list-group-item d-flex justify-content-between">
                     <span className="term">Born </span>
-                    <span>{born}</span>
+                    <span>{born ? born : 'no data :('}</span>
                 </li>
                 <li className="list-group-item d-flex justify-content-between">
                     <span className="term">Died </span>
-                    <span>{died}</span>
+                    <span>{died ? died : 'no data :('}</span>
                 </li>
                 <li className="list-group-item d-flex justify-content-between">
                     <span className="term">Culture </span>
-                    <span>{culture}</span>
+                    <span>{culture ? culture : 'no data :('}</span>
                 </li>
             </ul>
         </>

@@ -2,24 +2,27 @@ import React, {Component} from 'react';
 import {Col, Row, Container} from 'reactstrap';
 import Header from '../header';
 import RandomChar from '../randomChar';
-import ItemList from '../itemList';
-import CharDetails from '../charDetails';
+import ErrorMessage from '../errorMessage';
+import CharacterPage from '../characterPage';
 
 
 class App extends Component {
 
     state = {
-        randomChar: true
+        showRandomChar: true
     }
 
     toggleRandomChar = () => {
             this.setState({
-                randomChar: !this.state.randomChar
+                showRandomChar: !this.state.showRandomChar
             })
         }
 
     render() {
         
+        if (this.state.error) {
+            return (<ErrorMessage/>)
+        }
 
         return (
             <> 
@@ -29,22 +32,15 @@ class App extends Component {
                 <Container>
                     <Row>
                         <Col lg={{size: 5, offset: 0}}>
-                            {this.state.randomChar ? <RandomChar/> : null}
+                            {this.state.showRandomChar ? <RandomChar/> : null}
                             <button type='button' 
                                 onClick={this.toggleRandomChar} 
-                                style={{margin:'0px auto 30px', padding:'10px', 'background-color':'#037', color: 'white',
-                                        'border-radius':'5px'}}
-                                >Toggle Random Char</button>
+                                style={{margin:'0px auto 30px', padding:'10px', backgroundColor:'#037', color: 'white',
+                                        borderRadius:'5px'}}
+                                >Toggle Random Character</button>
                         </Col>
                     </Row>
-                    <Row>
-                        <Col md='6'>
-                            <ItemList />
-                        </Col>
-                        <Col md='6'>
-                            <CharDetails />
-                        </Col>
-                    </Row>
+                    <CharacterPage/>
                 </Container>
             </>
         );
