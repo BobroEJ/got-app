@@ -3,7 +3,7 @@ export default class GoTService {
         this._apiBase = 'https://www.anapioficeandfire.com/api';
     }
 
-    async getResource(url) {
+    getResource = async (url) => {
         const res = await fetch(`${this._apiBase}${url}`);
     
         if (!res.ok) {
@@ -13,38 +13,39 @@ export default class GoTService {
         return await res.json();
     }
 
-    async getAllCharacters(page) {
+    getAllCharacters = async (page) => {
         const res = await this.getResource(`/characters?page=${page}&pageSize=10`);
         return res.map(this._transformCharacter);
     }
 
-    async getCharacter(id) {
+    getCharacter = async (id) => {
         const char = await this.getResource(`/characters/${id}`);
         return this._transformCharacter(char);
     }
 
-    async getAllHouses() {
-        const res = await this.getResource(`/houses?page=5&pageSize=10`);
+    getAllHouses = async (page) => {
+        const res = await this.getResource(`/houses?page=${page}&pageSize=10`);
         return res.map(this._transformHouse);
     }
 
-    async getHouses(id) {
+    getHouses = async (id) => {
         const house = await this.getResource(`/houses/${id}`);
         return this._transformHouse(house);
     }
 
-    async getAllBooks() {
-        const res = await this.getResource(`/books?page=5&pageSize=10`);
+    getAllBooks = async (page) => {
+        const res = await this.getResource(`/books?page=1&pageSize=12`);
         return res.map(this._transformBook);
     }
 
-    async getBooks(id) {
+    getBooks = async (id) => {
         const book = await this.getResource(`/books/${id}`);
         return this._transformBook(book);
     }
 
     _transformCharacter(char) {
         return {
+            id: char.url.slice(char.url.lastIndexOf('/')).slice(1),
             name: char.name,
             gender: char.gender,
             born: char.born,
@@ -74,11 +75,3 @@ export default class GoTService {
     }
 }
 
-const got = new GoTService();
-got.getAllCharacters()
-    .then(res => res.forEach(item => {
-        console.log(item.name);
-    }));
-
-got.getCharacter(777)
-    .then(res => console.log(res));
