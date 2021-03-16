@@ -64,7 +64,8 @@ const View = ({char}) => {
     const {name, gender, born, died, culture} = char;
     return (
         <>
-            <h4>Random Character: {name ? name : 'no data :('}</h4>
+            <h4>Random Character:</h4>
+            <h4>{name ? name : 'no data :('}</h4>
             <ul className="list-group list-group-flush">
                 <li className="list-group-item d-flex justify-content-between">
                     <span className="term">Gender </span>
