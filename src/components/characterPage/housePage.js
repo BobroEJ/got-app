@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
 import ItemList from '../itemList';
+import ItemDetails, {Field} from '../itemDetails';
 import ErrorMessage from '../errorMessage';
 import gotService from '../../Services/gotService';
 import RowBlock from '../rowBlock';
-import ItemDetails, {Field} from '../itemDetails';
 
-export default class CharacterPage extends Component {
+export default class HousePage extends Component {
 
     gotService = new gotService();
 
     state = {
-        selectedChar: 130,
+        selectedHouse: 1,
         error: false
     }
 
@@ -23,7 +23,7 @@ export default class CharacterPage extends Component {
 
     onItemSelected = (id) => {
         this.setState({
-            selectedChar : id
+            selectedHouse : id
         })
     }
 
@@ -36,18 +36,19 @@ export default class CharacterPage extends Component {
         const itemList = (
             <ItemList 
                 onItemSelected={this.onItemSelected}
-                getData={this.gotService.getAllCharacters}
-                renderItem={(item) => `${item.name} (${item.gender})`}/>
+                getData={this.gotService.getAllHouses}
+                renderItem={(item) => `${item.name}`}/>
         )
 
         const itemDetails = (
             <ItemDetails 
-                itemId={this.state.selectedChar}
-                getItem={this.gotService.getCharacter}>
-                    <Field field='gender' label='Gender'/>
-                    <Field field='born' label='Born'/>
-                    <Field field='died' label='Died'/>
-                    <Field field='culture' label='Culture'/>
+                itemId={this.state.selectedHouse}
+                getItem={this.gotService.getHouse}>
+                    <Field field='region' label='Region'/>
+                    <Field field='words' label='Words'/>
+                    <Field field='titles' label='Titles'/>
+                    <Field field='overlord' label='Overlord'/>
+                    <Field field='ancestralWeapons' label='Ancestral Weapons'/>
             </ItemDetails>
         )
 

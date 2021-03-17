@@ -14,7 +14,7 @@ export default class GoTService {
     }
 
     getAllCharacters = async (page) => {
-        const res = await this.getResource(`/characters?page=${page}&pageSize=10`);
+        const res = await this.getResource(`/characters?page=${page}&pageSize=8`);
         return res.map(this._transformCharacter);
     }
 
@@ -24,21 +24,21 @@ export default class GoTService {
     }
 
     getAllHouses = async (page) => {
-        const res = await this.getResource(`/houses?page=${page}&pageSize=10`);
+        const res = await this.getResource(`/houses?page=${page}&pageSize=8`);
         return res.map(this._transformHouse);
     }
 
-    getHouses = async (id) => {
+    getHouse = async (id) => {
         const house = await this.getResource(`/houses/${id}`);
         return this._transformHouse(house);
     }
 
     getAllBooks = async (page) => {
-        const res = await this.getResource(`/books?page=1&pageSize=12`);
+        const res = await this.getResource(`/books?page=1&pageSize=8`);
         return res.map(this._transformBook);
     }
 
-    getBooks = async (id) => {
+    getBook = async (id) => {
         const book = await this.getResource(`/books/${id}`);
         return this._transformBook(book);
     }
@@ -56,6 +56,7 @@ export default class GoTService {
 
     _transformHouse(house) {
         return {
+            id: house.url.slice(house.url.lastIndexOf('/')).slice(1),
             name: house.name,
             region: house.region,
             words: house.words,
@@ -67,6 +68,7 @@ export default class GoTService {
 
     _transformBook(book) {
         return {
+            id: book.url.slice(book.url.lastIndexOf('/')).slice(1),
             name: book.name,
             numberOfPages: book.numberOfPages,
             publiser: book.publiser,

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './charDetails.css';
+import './itemDetails.css';
 
 const Field = ({item, field, label}) => {
     return (
@@ -14,7 +14,7 @@ export {
     Field
 }
 
-export default class CharDetails extends Component {
+export default class ItemDetails extends Component {
 
     state = {
         item: null
@@ -45,7 +45,7 @@ export default class CharDetails extends Component {
     render() {
 
         if (!this.state.item) {
-            return <span className='select-error'>Please select a character</span>
+            return <span className='select-error'>Please select something</span>
         }
 
         const item = this.state.item;
